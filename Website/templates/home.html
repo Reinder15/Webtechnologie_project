@@ -1,4 +1,23 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block
 content%}
-<h1>This is the homepage!</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beschikbare bungalows</title>
+</head>
+<body>
+    <h1>Beschikbare bungalows</h1>
+    
+    <ul>
+        {% for bungalow in bungalows %}
+            <li>
+                <strong>{{ bungalow.naam }}</strong>
+                <p>Type: {{ bungalow.bungalow_type.aantal_personen }} persons</p>
+                <p>Week Price: €{{ bungalow.bungalow_type.weekprijs }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
 {% endblock %}
