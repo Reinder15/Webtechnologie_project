@@ -20,3 +20,4 @@ class User(db.model, UserMixin):
     email = db.collumn(db.string(255), unique=True)
     password = db.cullumn(db.string(255))
 
+# New line of code
