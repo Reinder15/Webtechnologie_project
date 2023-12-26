@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+import os
 from flask_login import LoginManager
+from flask_migrate import Migrate
+
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
 
 
 def create_app():
@@ -22,7 +26,7 @@ def create_app():
     from .models import User, Bungalow, Bungalowtype
 
     create_database(app)
-    
+
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -34,7 +38,9 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists('Website/' + DB_NAME):
+    if not path.exists('instance/' + DB_NAME):
         with app.app_context():
             db.create_all()
             print('Created Database!')
+    
+

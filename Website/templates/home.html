@@ -11,11 +11,10 @@ content%}
     
     <ul>
         {% for bungalow in bungalows %}
-            <li>
-                <strong>{{ bungalow.naam }}</strong>
-                <p>Type: {{ bungalow.bungalow_type.aantal_personen }} persons</p>
-                <p>Week Price: €{{ bungalow.bungalow_type.weekprijs }}</p>
-            </li>
+            <figure class="figure">
+                <img src="{{ url_for('static', filename='images/'+ bungalow.type.fotopath+'.jpg') }}" class="rounded">
+                <figcaption class="figure-caption">{{ bungalow.naam }}</figcaption>
+              </figure>
         {% endfor %}
     </ul>
 </body>
