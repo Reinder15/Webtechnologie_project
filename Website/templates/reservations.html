@@ -7,7 +7,10 @@
   </head>
   <body>
     <h1>Jouw reserveringen</h1>
-    
+    <lu>
+        <li>Bungalow: {{ reservation.bungalow_id.naam }}</li>
+        <li>Gereserveerde week: {{ reservation.week }}</li>
+    </lu>
   </body>
 </html>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, flash, redirect, url_for
+from flask import Blueprint, render_template, abort, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
 from Website.models import db, User, Bungalow, Bungalowtype, Reservation
@@ -27,18 +27,18 @@ def booking(id):
 def reservation():
     return render_template('reservations.html', user=current_user)
 
-@views.route('/create_reservation/<int:bungalow_id>', methods=['POST'])
+@views.route('/booking/<int:id>/reservation', methods=['POST'])
 @login_required
-def create_reservation(bungalow_id):
+def create_reservation(id):
     # Check if the user has already made a reservation for this bungalow
-    existing_reservation = Reservation.query.filter_by(user_id=current_user.id, bungalow_id=bungalow_id).first()
+    existing_reservation = Reservation.query.filter_by(user_id=current_user.id, bungalow_id=id).first()
     if existing_reservation:
         flash('You have already made a reservation for this bungalow.', category='error')
     else:
         # Create a new reservation
-        reservation = Reservation(user_id=current_user.id, bungalow_id=bungalow_id, week=datetime.date.today())
+        reservation = Reservation(user_id=current_user.id, bungalow_id=id, week=request.form.get('week'))
         db.session.add(reservation)
         db.session.commit()
         flash('Reservation created successfully.', category='succes')
 
-    return redirect(url_for('views.booking', id=bungalow_id))
+    return redirect(url_for('views.booking',user=current_user, id=id))
