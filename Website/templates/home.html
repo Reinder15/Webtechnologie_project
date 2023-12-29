@@ -1,22 +1,26 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block
-content%}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beschikbare bungalows</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Beschikbare bungalows</h1>
-    
+
     <ul>
-        {% for bungalow in bungalows %}
-            <figure class="figure">
-                <img src="{{ url_for('static', filename='images/'+ bungalow.type.fotopath+'.jpg') }}" class="rounded">
-                <figcaption class="figure-caption">{{ bungalow.naam }}</figcaption>
-              </figure>
-        {% endfor %}
+      {% for bungalow in bungalows %}
+      <figure class="figure">
+        <a href="{{ url_for('views.booking', id=bungalow.id) }}">
+          <img
+            src="{{ url_for('static', filename='images/'+ bungalow.type.fotopath+'.jpg') }}"
+            class="rounded"
+          />
+        </a>
+        <figcaption class="figure-caption">{{ bungalow.naam }}</figcaption>
+      </figure>
+      {% endfor %}
     </ul>
-</body>
+  </body>
 </html>
 {% endblock %}

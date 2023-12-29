@@ -1,9 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-import os
 from flask_login import LoginManager
-from flask_migrate import Migrate
 
 
 db = SQLAlchemy()
@@ -13,17 +11,19 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'Lusten jullie wel een broodje poep?'
+    app.config['SECRET_KEY'] = 'asfasdfasdfwewrhxxzcvdgsag4351sdfa1335'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
     from .views import views
     from .auth import auth
 
-    app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(views, name='booking', url_prefix='/booking/int(id)')
+    app.register_blueprint(views, name='reservations', url_prefix='/reservations/')
 
-    from .models import User, Bungalow, Bungalowtype
+    from .models import User, Bungalow, Bungalowtype, Reservation
 
     create_database(app)
 

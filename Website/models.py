@@ -6,11 +6,13 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
+    reservations = db.relationship('Reservation', backref='user', lazy=True)
 
 class Bungalow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     naam = db.Column(db.String(255), unique=True, nullable=False)
     type_id = db.Column(db.Integer, db.ForeignKey('bungalowtype.id'), nullable=False)
+    reservations = db.relationship('Reservation', backref='bungalow', lazy=True)
 
 class Bungalowtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +20,13 @@ class Bungalowtype(db.Model):
     weekprijs = db.Column(db.Float, nullable=False)
     fotopath = db.Column(db.String)
     bungalows = db.relationship('Bungalow', backref='type', lazy=True)
+
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    bungalow_id = db.Column(db.Integer, db.ForeignKey('bungalow.id'), nullable=False)
+    week = db.Column(db.String(10), nullable=False)
+
 
 predefined_bungalowtypes = [
     {'aantal_personen': 4, 'weekprijs': 1600, 'fotopath': 'bungalow_4_persoons'},
