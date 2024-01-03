@@ -10,15 +10,15 @@
 
     <ul>
       {% for bungalow in bungalows %}
-      <figure class="figure">
-        <a href="{{ url_for('views.booking', id=bungalow.id) }}">
-          <img
-            src="{{ url_for('static', filename='images/'+ bungalow.type.fotopath+'.jpg') }}"
-            class="rounded"
-          />
-        </a>
-        <figcaption class="figure-caption">{{ bungalow.naam }}</figcaption>
-      </figure>
+      <div class="card">
+        <img src="{{ url_for('static', filename='images/'+ bungalow.type.fotopath+'.jpg') }}" class="card-img-top" alt="...">
+      
+        <div class="card-body">
+          <h5 class="card-title">{{ bungalow.naam }}</h5>
+          <p class="card-text">Aantal personen: {{ bungalow.type.aantal_personen }}<br>
+            <p class="card-text">Weekprijs: {{ bungalow.type.weekprijs }}</p>
+            <a href="{{ url_for('views.booking', id=bungalow.id) }}"class="btn btn-primary">Reserveren</a>
+          </div>
       {% endfor %}
     </ul>
   </body>

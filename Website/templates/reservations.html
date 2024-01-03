@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
+{% extends "base.html" %}
+{% block title %}Jouw Reserveringen{% endblock %}
+{% block content%}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,10 +9,18 @@
   </head>
   <body>
     <h1>Jouw reserveringen</h1>
-    <lu>
-        <li>Bungalow: {{ reservation.bungalow_id.naam }}</li>
-        <li>Gereserveerde week: {{ reservation.week }}</li>
-    </lu>
+        {% for reservation in reservations %}
+            <div class="card">
+              <img src="{{ url_for('static', filename='images/'+ reservation.bungalow.type.fotopath+'.jpg') }}" class="card-img-top" alt="...">
+            
+              <div class="card-body">
+                <h5 class="card-title">{{ reservation.bungalow.naam }}</h5>
+                <p class="card-text">Aantal personen: {{ reservation.bungalow.type.aantal_personen }}<br>
+                  Gereserveerde week: {{reservation.week}}</p>
+                <a href="{{ url_for('views.change_reservation', reservation_id=reservation.id) }}" class="btn btn-primary">Wijzig reservering</a>
+                <a href="{{ url_for('views.delete_reservation', reservation_id=reservation.id) }}" class="btn btn-danger">Verwijder reservering</a>
+              </div>
+        {% endfor %}
   </body>
 </html>
 {% endblock %}
