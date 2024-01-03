@@ -45,12 +45,15 @@ def reservations():
     else:
         return render_template('reservations.html', user=current_user, reservations=user_reservations)
 
-@views.route('/change_reservation/<int:reservation_id>', methods=['POST'])
+@views.route('/change_week/<int:reservation_id>', methods=['POST'])
 @login_required
-def change_reservation():
-    
-    db.session.commit()
-    flash('Reservations updated successfully.', category='success')
+def change_week():
+    pass
+
+@views.route('/change_bungalow/<int:reservation_id>', methods=['POST'])
+@login_required
+def change_bungalow():
+    pass
 
 @views.route('/delete_reservation/<int:reservation_id>', methods=['GET'])
 def delete_reservation(reservation_id):
